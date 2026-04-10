@@ -1,8 +1,8 @@
 /*
-  Prose v1.5 - tokens
+  Prose UI - tokens
 */
 
-:root {
+:where(html) {
   /* black */
   --prs-c-black: #000000;
 
@@ -50,6 +50,20 @@
   --prs-c-accent-800: #61013E;
   --prs-c-accent-900: #4A002B;
   --prs-c-accent-950: #300019;
+
+  /* gray */
+  --prs-c-gray-50: #FAFAFA;
+  --prs-c-gray-100: #F1F0F1;
+  --prs-c-gray-200: #E0DFE0;
+  --prs-c-gray-300: #CBCACC;
+  --prs-c-gray-400: #A5A4A7;
+  --prs-c-gray-500: #807F82;
+  --prs-c-gray: var(--prs-c-gray-500);
+  --prs-c-gray-600: #69686F;
+  --prs-c-gray-700: #494751;
+  --prs-c-gray-800: #31303B;
+  --prs-c-gray-900: #1D1B26;
+  --prs-c-gray-950: #0E0D16;
 
   /* info */
   --prs-c-info-50: #F9FCFF;
@@ -107,23 +121,9 @@
   --prs-c-danger-900: #640E2A;
   --prs-c-danger-950: #320715;
 
-  /* gray */
-  --prs-c-gray-50: #FAFAFA;
-  --prs-c-gray-100: #F1F0F1;
-  --prs-c-gray-200: #E0DFE0;
-  --prs-c-gray-300: #CBCACC;
-  --prs-c-gray-400: #A5A4A7;
-  --prs-c-gray-500: #807F82;
-  --prs-c-gray: var(--prs-c-gray-500);
-  --prs-c-gray-600: #69686F;
-  --prs-c-gray-700: #494751;
-  --prs-c-gray-800: #31303B;
-  --prs-c-gray-900: #1D1B26;
-  --prs-c-gray-950: #0E0D16;
-
   /* typography */
   --prs-ff-sans: 'Figtree', ui-sans-serif, system-ui, -apple-system, 'system-ui', 'Segoe UI', Roboto, 'Helvetica Neue', Arial, 'Noto Sans', sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
-  --prs-ff-serif: Literata, ui-serif, Georgia, Cambria, 'Times New Roman', Times, serif;
+  --prs-ff-serif: 'Literata', ui-serif, Georgia, Cambria, 'Times New Roman', Times, serif;
   --prs-ff-mono: 'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, 'Liberation Mono', 'Courier New', monospace;
   --prs-ff-websafe: Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
 
@@ -172,7 +172,7 @@
   --prs-fl-ui-md: 1.5;
   --prs-fw-ui-sm: normal;
   --prs-fz-ui-sm: 0.875rem;
-  --prs-fl-ui-sm: 1.375rem;
+  --prs-fl-ui-sm: 1.375;
   --prs-fw-ui-subtext: normal;
   --prs-fz-ui-subtext: 0.8125rem;
   --prs-fl-ui-subtext: 1.38;
