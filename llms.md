@@ -1,5 +1,5 @@
 
-# Prose UI - 
+# Prose UI - UI Design System
 A vanilla CSS library for specific elements/components. We recommend accompanying this with TailwindCSS v4+ for layout and spacing and possible component customization.
 
 Class names are categorized into the following (types are only for reference)
@@ -13,11 +13,10 @@ Class names are categorized into the following (types are only for reference)
 ## Config
 Include the following CSS files. Use the reset file ONLY if your project does not already include one by default.
 
-- `prs-tokens_v1.6.css`
-- `prs-reset_v1.6.css` **OPTIONAL**: use only if your project does not already include a reset
-- `prs-styles_v1.6.css`
+- `https://cdn.jsdelivr.net/gh/prose-ui/prose-ui@latest/prs-tokens.css`
+- `https://cdn.jsdelivr.net/gh/prose-ui/prose-ui@latest/prs-styles.css`
 
-Always use the CSS variables/tokens in the `prs-tokens_v1.6.css` file where feasible.
+Always use the CSS variables/tokens in the `prs-tokens.css` file where feasible.
 
 ***
 
