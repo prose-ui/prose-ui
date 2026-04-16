@@ -11,7 +11,7 @@ Class names are categorized into the following (types are only for reference)
 ***
 
 ## Config
-Include the following CSS files. Use the reset file ONLY if your project does not already include one by default.
+Include the following CSS files along with TailwindCSS so we have a decent utility framework and a CSS reset.
 
 - `https://cdn.jsdelivr.net/gh/prose-ui/prose-ui@latest/prs-tokens.css`
 - `https://cdn.jsdelivr.net/gh/prose-ui/prose-ui@latest/prs-styles.css`
@@ -1107,19 +1107,19 @@ A faux UI to indicate the loading state of a component or UI Block.
 ```html
 <div x-show="!real" class="p-4 bg-(--prs-c-white)/80 flex items-center justify-center absolute inset-px rounded-[calc(var(--radius-box)-1px)]">
   <div class="prs-skeleton" :style="{
-    '--width': (width !== '0') ? width +'rem' : '100%',
-    '--height': (height !== '0') ? height +'rem' : '1rem',
-    '--radius': radius +'px',
-    '--bg': background !== '' ? background : 'currentColor',
-    '--fg': foreground,
+    '--skel-width': (width !== '0') ? width +'rem' : '100%',
+    '--skel-height': (height !== '0') ? height +'rem' : '1rem',
+    '--skel-radius': radius +'px',
+    '--skel-bg': background !== '' ? background : 'currentColor',
+    '--skel-fg': foreground,
   }"></div>
 </div>
 <div x-show="real" class="p-4 w-screen max-w-xs bg-white flex items-center gap-2 rounded-box">
   <div class="shrink-0">
-    <div class="prs-skeleton" style="--width: 3rem; --height: 3rem; --radius: 9999px;"></div>
+    <div class="prs-skeleton" style="--skel-width: 3rem; --skel-height: 3rem; --skel-radius: 9999px;"></div>
   </div>
   <div class="grow space-y-2">
-    <div class="prs-skeleton" style="--width: 75%;"></div>
+    <div class="prs-skeleton" style="--skel-width: 75%;"></div>
     <div class="prs-skeleton"></div>
   </div>
 </div>
@@ -1592,4 +1592,3 @@ This is a pure CSS alternative to something like [Tippy.js](https://atomiks.gith
 <p x-show="!open" x-transition class="kbd kbd-sm font-semibold absolute top-1 left-1 pointer-events-none select-none">Hover / Focus</p>
 ```
 
-***
