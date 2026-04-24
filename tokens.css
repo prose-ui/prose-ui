@@ -181,15 +181,15 @@
     typography - button
     fw = font-weight; fz = font-size; fl = leading/line-height
   */
-  --prs-fw-button-lg: normal;
+  --prs-fw-button-lg: 600;
   --prs-fz-button-lg: 1.125rem;
-  --prs-fl-button-lg: 1.11;
-  --prs-fw-button-md: normal;
-  --prs-fz-button-md: 0.9375rem;
-  --prs-fl-button-md: 1.33;
-  --prs-fw-button-sm: normal;
+  --prs-fl-button-lg: 1.3333333333;
+  --prs-fw-button-md: 600;
+  --prs-fz-button-md: 1rem;
+  --prs-fl-button-md: 1.375;
+  --prs-fw-button-sm: 600;
   --prs-fz-button-sm: 0.75rem;
-  --prs-fl-button-sm: 1.67;
+  --prs-fl-button-sm: 1.5;
 
   /* border */
   --prs-border-btn: 1px;

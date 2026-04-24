@@ -118,6 +118,38 @@ Please use **role** and **aria-live** attributes depending on your use case.
 
 ***
 
+### Attachment
+
+**Description**  
+Attached files to messages or file type input.
+
+**Classes:**  
+- `.prs-attachment` - component: Container
+- `.prs-thumb` - part: Thumbnail container (img, svg, iconify-icon)
+- `.prs-meta` - part: Details container
+- `.prs-name` - part: file name
+- `.prs-ext` - part: file type/ext
+- `.prs-close` - part: Close/remove button
+
+**Example:**  
+```html
+<div class="prs-attachment w-screen max-w-xs">
+  <div class="prs-thumb">
+    <svg x-show="!thumbnail" xmlns="http://www.w3.org/2000/svg" width="24" height="24" role="img" fill="currentColor">
+      <use href="/_assets/prs-icons.svg#content-type-blank-document"></use>
+    </svg>
+    <img x-show="thumbnail" src="https://placehold.net/4.png" alt="File thumbnail preview" />
+  </div>
+  <div class="prs-meta">
+    <div class="prs-name" x-text="name.length ? name : 'file_name.png'"></div>
+    <small class="prs-ext" x-text="extension"></small>
+  </div>
+  <button x-show="withRemove" class="prs-close"><iconify-icon icon="mdi:close" noobserver></iconify-icon></button>
+</div>
+```
+
+***
+
 ### Avatar
 
 **Description**  
@@ -343,7 +375,7 @@ The maximum width of a chat bubble should be around **65ch**. This will ensure t
     }"
   >
     <div x-show="avatar" x-transition class="prs-chat-image prs-avatar prs-avatar-md"><img src="https://placehold.net/4.png" alt="Chat bubble component" /></div>
-    <div x-show="header" x-transition class="prs-chat-header">Header text <time>HH:MM</time></div>
+    <div x-show="header" x-transition class="prs-chat-header">Ohbee One <time>12:34</time></div>
     <div
       class="prs-chat-bubble"
       :class="{
@@ -355,9 +387,9 @@ The maximum width of a chat bubble should be around **65ch**. This will ensure t
         'prs-chat-bubble-warning': variant === 'warning',
         'prs-chat-bubble-danger': variant === 'danger',
       }"
-      x-text="text"
+      x-text="message.length ? message : 'You were the chosen one...'"
     ></div>
-    <div x-show="footer" x-transition class="prs-chat-footer">Footer text</div>
+    <div x-show="footer" x-transition class="prs-chat-footer">Delivered</div>
   </div>
 </div>
 ```
@@ -535,6 +567,8 @@ Modal window that prompts the user to take an action or provides important infor
 
 **For best accessibility:**  
 Please use the **dialog** tag. It automatically comes with **FREE** accessibility features that are built into the browser and operating system like keyboard controls, focus trap with access to browser controls (react focus trap does NOT support this and is NOT accessible), unlimited dialog nesting/stacking, optional click outside to close, etc.
+&lt;br /&gt;&lt;br /&gt;
+To prevent **esc ⎋** or click-outside-to-close you can use **closedby=&quot;none|closerequest&quot;**.
 
 **Classes:**  
 - `.prs-dialog` - component: Container
@@ -602,6 +636,44 @@ Form-like element that allows users to select an option from a list of choices.
     </li>
     <li><button class="prs-menu-item"><span class="prs-menu-item-label">Menu item</span></button></li>
   </ul>
+</div>
+```
+
+***
+
+### File
+
+**Description**  
+Form field input type for uploading files to a web server.
+
+**Note:**  
+This is a modifier of **.prs-input**. Please use [input](../input/) properties and then stack **.prs-file**. Use this alongside the [attachment](../attachment/) component.
+
+**Classes:**  
+- `.prs-file` - component: Container
+
+**Example:**  
+```html
+<div x-data="fileUpload()" class="w-screen max-w-md">
+  <div class="prs-form-control">
+    <input @change="handleFiles" x-ref="fileInput" type="file" id="preview-file" class="prs-input prs-file" :class="{
+      'prs-input-ghost': variant === 'ghost',
+      'prs-input_hover': state === 'hover',
+      'prs-input_focus': state === 'focus',
+    }" :disabled="state === 'disabled'" multiple />
+  </div>
+  <div x-show="files.length" x-transition class="py-3 grid grid-cols-[repeat(auto-fit,minmax(12.5rem,1fr))] gap-3">
+    <template x-for="(file, index) in files" :key="file.name" hidden>
+      <div class="prs-attachment">
+        <div class="prs-thumb"><svg width="24" height="24" role="img" fill="currentColor"><use href="/_assets/prs-icons.svg#content-type-blank-document"></use></svg></div>
+        <div class="prs-meta">
+          <div class="prs-name" x-text="file.name"></div>
+          <small class="prs-ext" x-text="file.type"></small>
+        </div>
+        <button @click="removeFile(index)" class="prs-close"><iconify-icon icon="mdi:close" noobserver></iconify-icon></button>
+      </div>
+    </template>
+  </div>
 </div>
 ```
 
@@ -683,6 +755,8 @@ Form element that allows users to input and edit text or data into a website pag
       'prs-input_focus': state === 'focus',
       'prs-input_invalid': invalid,
       'prs-select': type === 'select',
+      'prs-textarea': type === 'textarea',
+      'prs-file': type === 'file',
     }"
     :placeholder="placeholder ? placeholder : 'Text Placeholder'"
     :disabled="state === 'disabled'"
@@ -794,7 +868,7 @@ If the user has reduce motion settings applied in their browser or OS the spin a
 
 **Example:**  
 ```html
-<div class="absolute inset-0 flex items-center justify-center rounded-box transition" :class="reverse && 'bg-black/60 backdrop-blur-xs'">
+<div class="absolute inset-0 flex items-center justify-center rounded-box transition" :class="reverse && 'bg-black/60'">
   <span
     class="prs-loading"
     :class="{
@@ -821,6 +895,52 @@ If the user has reduce motion settings applied in their browser or OS the spin a
       </g>
     </svg>
   </span>
+</div>
+```
+
+***
+
+### Message
+
+**Description**  
+Allows users to enter a message or request for an AI system to process and respond to.
+
+**Classes:**  
+- `.prs-message` - component: AI prompt
+- `.prs-hint` - part: Hint subtext
+- `.prs-message_hover` - state: Hover state
+- `.prs-message_focus` - state: Focus state
+
+**Example:**  
+```html
+<div class="prs-message" :class="{
+  'prs-message_hover': state === 'hover',
+  'prs-message_focus': state === 'focus',
+}">
+  <header x-show="withAttachments">
+    <template x-for="i in 4" hidden>
+      <div class="prs-attachment">
+        <div class="prs-thumb"><svg width="24" height="24" role="img" fill="currentColor"><use href="/_assets/prs-icons.svg#content-type-blank-document"></use></svg></div>
+        <div class="prs-meta">
+          <div class="prs-name">file-name.pdf</div>
+          <small class="prs-ext">application/pdf</small>
+        </div>
+        <button class="prs-close"><iconify-icon icon="mdi:close" noobserver></iconify-icon></button>
+      </div>
+    </template>
+  </header>
+  <label for="message-ai" class="sr-only">Message</label>
+  <textarea x-model="message" id="massage-ai" placeholder="Type your message..." :disabled="state === 'disabled'"></textarea>
+  <footer>
+    <div>
+      <button @click="withAttachments = !withAttachments" class="prs-btn prs-btn-tertiary prs-btn-square" :disabled="state === 'disabled'" aria-label="Attach"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" role="img" fill="currentColor"><use href="/_assets/prs-icons.svg#edit-add"></use></svg></button>
+    </div>
+    <div>
+      <button class="prs-btn prs-btn-tertiary prs-btn-square" :disabled="state === 'disabled'" aria-label="Dictate"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" role="img" fill="currentColor"><use href="/_assets/prs-icons.svg#media-microphone"></use></svg></button>
+      <button class="prs-btn prs-btn-primary prs-btn-square" :disabled="state === 'disabled' || !message.length" aria-label="Send"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" role="img" fill="currentColor"><use href="/_assets/prs-icons.svg#uncategorized-send"></use></svg></button>
+    </div>
+  </footer>
+  <span class="prs-hint">AI can make mistakes. Don't type in personal information.</span>
 </div>
 ```
 
@@ -1046,9 +1166,9 @@ This is a modifier of **.prs-input**. Please use [input](../input/) properties a
 
 **Example:**  
 ```html
-<label class="prs-form-control w-xl max-w-xs">
-  <span x-show="label.length" class="prs-label"><span class="prs-label-text" x-text="label"></span></span>
+<div class="prs-form-control w-xl max-w-xs">
   <select
+    id="preview-select"
     class="prs-input prs-select"
     :class="{
       'prs-input-ghost': variant === 'ghost',
@@ -1062,7 +1182,7 @@ This is a modifier of **.prs-input**. Please use [input](../input/) properties a
       <option x-text="'Option '+ i"></option>
     </template>
   </select>
-</label>
+</div>
 ```
 
 ***
@@ -1102,10 +1222,15 @@ A faux UI to indicate the loading state of a component or UI Block.
 
 **Classes:**  
 - `.prs-skeleton` - component: For container
+- `--skel-width` - token: Width
+- `--skel-height` - token: Height
+- `--skel-radius` - token: Corner/border radius
+- `--skel-bg` - token: Background color (converted to 90% transparent)
+- `--skel-fg` - token: Gradient base color (converted to 30% transparent)
 
 **Example:**  
 ```html
-<div x-show="!real" class="p-4 bg-(--prs-c-white)/80 flex items-center justify-center absolute inset-px rounded-[calc(var(--radius-box)-1px)]">
+<div x-show="!real" class="p-4 flex items-center justify-center absolute inset-px rounded-[calc(var(--radius-box)-1px)]">
   <div class="prs-skeleton" :style="{
     '--skel-width': (width !== '0') ? width +'rem' : '100%',
     '--skel-height': (height !== '0') ? height +'rem' : '1rem',
@@ -1256,7 +1381,7 @@ Element that displays tabular data in a structured format of rows and columns.
     </thead>
     <tbody>
       <tr>
-        <th class="w-px text-xs font-bold">#</th>
+        <th class="w-px text-xs font-bold">#.</th>
         <td :class="{
           'prs-cell-end': end,
         }">
@@ -1297,10 +1422,10 @@ Element that displays tabular data in a structured format of rows and columns.
             <em class="whitespace-nowrap" x-show="subData">Some data</em>
           </div>
         </td>
-        <th class="w-px text-xs font-bold">#</th>
+        <th class="w-px text-xs font-bold">#.</th>
       </tr>
       <tr>
-        <th class="w-px text-xs font-bold">#</th>
+        <th class="w-px text-xs font-bold">#.</th>
         <td :class="{
           'prs-cell-end': end,
         }">
@@ -1341,10 +1466,10 @@ Element that displays tabular data in a structured format of rows and columns.
             <em class="whitespace-nowrap" x-show="subData">Some data</em>
           </div>
         </td>
-        <th class="w-px text-xs font-bold">#</th>
+        <th class="w-px text-xs font-bold">#.</th>
       </tr>
       <tr>
-        <th class="w-px text-xs font-bold">#</th>
+        <th class="w-px text-xs font-bold">#.</th>
         <td :class="{
           'prs-cell-end': end,
         }">
@@ -1385,10 +1510,10 @@ Element that displays tabular data in a structured format of rows and columns.
             <em class="whitespace-nowrap" x-show="subData">Some data</em>
           </div>
         </td>
-        <th class="w-px text-xs font-bold">#</th>
+        <th class="w-px text-xs font-bold">#.</th>
       </tr>
       <tr>
-        <th class="w-px text-xs font-bold">#</th>
+        <th class="w-px text-xs font-bold">#.</th>
         <td :class="{
           'prs-cell-end': end,
         }">
@@ -1429,10 +1554,10 @@ Element that displays tabular data in a structured format of rows and columns.
             <em class="whitespace-nowrap" x-show="subData">Some data</em>
           </div>
         </td>
-        <th class="w-px text-xs font-bold">#</th>
+        <th class="w-px text-xs font-bold">#.</th>
       </tr>
       <tr>
-        <th class="w-px text-xs font-bold">#</th>
+        <th class="w-px text-xs font-bold">#.</th>
         <td :class="{
           'prs-cell-end': end,
         }">
@@ -1473,12 +1598,42 @@ Element that displays tabular data in a structured format of rows and columns.
             <em class="whitespace-nowrap" x-show="subData">Some data</em>
           </div>
         </td>
-        <th class="w-px text-xs font-bold">#</th>
+        <th class="w-px text-xs font-bold">#.</th>
       </tr>
     </tbody>
   </table>
 </div>
 <p class="kbd kbd-sm font-semibold absolute top-1 left-1 pointer-events-none select-none">Scrollable on x/y axis</p>
+```
+
+***
+
+### Textarea
+
+**Description**  
+Form element that allows users to input and edit text or data into a website page.
+
+**Note:**  
+This is a modifier of **.prs-input**. Please use [input](../input/) properties and then stack **.prs-textarea** on top just for **textarea** tags.
+
+**Classes:**  
+- `.prs-textarea` - component: For &lt;textarea&gt;
+
+**Example:**  
+```html
+<div class="prs-form-control w-screen max-w-xs">
+  <textarea
+    id="preview-textarea"
+    x-model="value"
+    class="prs-input prs-textarea"
+    :class="{
+      'prs-input-ghost': variant === 'ghost',
+      'prs-input_focus': state === 'focus',
+    }"
+    :placeholder="placeholder"
+    :disabled="state === 'disabled'"
+  ></textarea>
+</div>
 ```
 
 ***
