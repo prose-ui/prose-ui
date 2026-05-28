@@ -612,30 +612,57 @@ To prevent **esc ⎋** or click-outside-to-close you can use **closedby=&quot;no
 **Description**  
 Form-like element that allows users to select an option from a list of choices.
 
+**Note:**  
+Use this with the [button](../button/) and [menu](../menu/) components. It&#39;s a supplement for **.prs-btn** and **.prs-menu**. The preview example is using the browser&#39;s built-in **popover** API and **anchor** positioning for maximum accessibility and NO JavaScript dependency.
+
 **Classes:**  
-- `.prs-dropdown` - component: Container
-- `.prs-menu` - component: For &lt;ul&gt;
-- `.prs-menu-item` - part: For &quot;button&quot; container
-- `.prs-menu-item-label` - part: For label within &quot;button&quot;
-- `.prs-menu-icon` - part: For icon wrapper within &lt;button&gt;
+- `.prs-dropdown` - component: Wrapper
+- `.prs-dropdown-btn` - modifier: Variant for .prs-btn
+- `.prs-dropdown-menu` - part: Required for .prs-menu
+- `.prs-dropdown-menu-top` - modifier: Position the menu above the trigger element
+- `.prs-dropdown-menu-left` - modifier: Position the menu before the trigger element
+- `.prs-dropdown-menu-right` - modifier: Position the menu after the trigger element
+- `.prs-dropdown-menu-end` - modifier: Align the end of the menu to the end of the trigger element
+- `.prs-dropdown-menu-center` - modifier: Align the menu centered to the trigger element
+- `.prs-dropdown-menu_open` - modifier: Force open the menu
 
 **Example:**  
 ```html
 <div class="prs-dropdown">
-  <button class="prs-btn prs-btn-secondary">Dropdown</button>
-  <ul class="prs-menu">
-    <li><button class="prs-menu-item"><span class="prs-menu-item-label">Menu item</span></button></li>
-    <li>
-      <button @click.prevent="active = !active" class="prs-menu-item" :class="{
-        'prs-menu-item_hover': state === 'hover',
-        'prs-menu-item_focus': state === 'focus',
-      }">
-        <span class="prs-menu-item-label" aria-label="Truncate very long menu item labels" title="Truncate very long menu item labels">Truncate very long menu item labels</span>
-        <span x-show="active" class="prs-menu-icon" aria-label="Selected"><iconify-icon icon="mdi:check" width="24px" height="24px" class="iconify" noobserver></iconify-icon></span>
-      </button>
-    </li>
-    <li><button class="prs-menu-item"><span class="prs-menu-item-label">Menu item</span></button></li>
-  </ul>
+  <button
+    :class="{
+      'prs-btn-ghost': ghost,
+      'prs-btn-sm': size === 'sm',
+      'prs-btn-lg': size === 'lg',
+      'prs-btn_hover': state === 'hover',
+      'prs-btn_focus': state === 'focus',
+    }"
+    class="prs-btn prs-dropdown-btn"
+    popovertarget="popover-menu"
+    style="anchor-name:--anchor-menu"
+    :disabled="state === 'disabled'"
+  >
+    Dropdown
+  </button>
+  <div
+    :class="{
+      'prs-dropdown-menu_open': menu,
+      'prs-dropdown-menu-top': position === 'top',
+      'prs-dropdown-menu-left': position === 'left',
+      'prs-dropdown-menu-right': position === 'right',
+      'prs-dropdown-menu-end': align === 'end',
+      'prs-dropdown-menu-center': align === 'center',
+    }"
+    class="prs-menu prs-dropdown-menu"
+    id="popover-menu"
+    style="position-anchor:--anchor-menu"
+    popover
+  >
+    <menu>
+      <li><button @click="$el.closest('[popover]').hidePopover()" class="prs-menu-item">Menu Item 1</button></li>
+      <li><button @click="$el.closest('[popover]').hidePopover()" class="prs-menu-item">Menu Item 2</button></li>
+    </menu>
+  </div>
 </div>
 ```
 
@@ -848,6 +875,43 @@ A utility that allows you to join two or more elements together. This looks best
 
 ***
 
+### List
+
+**Description**  
+Layout to display continuous rows of information and details.
+
+**Classes:**  
+- `.prs-list` - component: Container
+
+**Example:**  
+```html
+<div class="w-screen max-w-xs">
+  <ul
+    class="prs-list"
+    :class="{
+      'prs-list-bordered': bordered,
+    }"
+  >
+    <template x-for="i in 3" hidden>
+      <li>
+        <div class="prs-avatar"><span class="prs-avatar-placeholder">CS</span></div>
+        <div>
+          <a href="#">Coming soon...</a>
+          <small x-show="sub" class="prs-list-subtext">Coming soon...</small>
+        </div>
+        <div class="prs-list-action">
+          <div class="prs-tooltip" data-tip="Information" tabindex="0">
+            <iconify-icon icon="mdi:information-outline" noobserver></iconify-icon>
+          </div>
+        </div>
+      </li>
+    </template>
+  </ul>
+</div>
+```
+
+***
+
 ### Loading
 
 **Description**  
@@ -895,6 +959,64 @@ If the user has reduce motion settings applied in their browser or OS the spin a
       </g>
     </svg>
   </span>
+</div>
+```
+
+***
+
+### Menu
+
+**Description**  
+List of links displayed vertically. For use with Dropdowns and popovers.
+
+**Classes:**  
+- `.prs-menu` - component: For &lt;ul&gt;
+- `.prs-menu-item` - part: For button/label container
+- `.prs-menu-item-label` - part: For text within item
+- `.prs-menu-icon` - part: For icon wrapper
+- `.prs-menu-search` - part: For search field
+
+**Example:**  
+```html
+<div class="prs-menu" :class="small && 'prs-menu-sm'">
+  <div x-show="search" class="prs-menu-search">
+    <label class="prs-input">
+      <input type="search" placeholder="Search" />
+      <span class="prs-label-text">
+        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" role="img" fill="currentColor"><use href="/_assets/prs-icons.svg#nav-search"></use></svg>
+      </span>
+    </label>
+  </div>
+  <menu>
+    <li>
+      <button x-show="leading !== 'checkbox'" @click.prevent="selected = !selected" class="prs-menu-item" :class="{
+        'prs-menu-item_hover': state === 'hover',
+        'prs-menu-item_focus': state === 'focus',
+      }" :disabled="state === 'disabled'">
+        <span x-show="leading === 'icon'" class="prs-menu-icon"><iconify-icon icon="mdi:folder" class="iconify" noobserver></iconify-icon></span>
+        <span class="prs-menu-item-label" aria-label="Truncate very long menu item labels" title="Truncate very long menu item labels">Truncate very long menu item labels</span>
+        <span x-show="selected" class="prs-menu-icon" aria-label="Selected"><iconify-icon icon="mdi:check" class="iconify" noobserver></iconify-icon></span>
+      </button>
+      <label x-show="leading === 'checkbox'" class="prs-menu-item" :class="{
+        'prs-menu-item_hover': state === 'hover',
+        'prs-menu-item_focus': state === 'focus',
+        'prs-menu-item_disabled': state === 'disabled',
+      }">
+        <input type="checkbox" class="prs-checkbox" x-model="selected" :disabled="state === 'disabled'" />
+        <span class="prs-menu-item-label" aria-label="Truncate very long menu item labels" title="Truncate very long menu item labels">Truncate very long menu item labels</span>
+      </label>
+    </li>
+    <li>
+      <button x-show="leading !== 'checkbox'" class="prs-menu-item">
+        <span x-show="leading === 'icon'" class="prs-menu-icon" aria-label="Selected"><iconify-icon icon="mdi:folder" class="iconify" noobserver></iconify-icon></span>
+        <span class="prs-menu-item-label">Menu item</span>
+      </button>
+      <label x-show="leading === 'checkbox'" class="prs-menu-item">
+        <input type="checkbox" class="prs-checkbox" />
+        <span class="prs-menu-item-label">Menu item</span>
+      </label>
+    </li>
+  </menu>
 </div>
 ```
 
@@ -1230,12 +1352,12 @@ A faux UI to indicate the loading state of a component or UI Block.
 
 **Example:**  
 ```html
-<div x-show="!real" class="p-4 flex items-center justify-center absolute inset-px rounded-[calc(var(--radius-box)-1px)]">
+<div x-show="!real" class="p-4 w-screen max-w-xl flex items-center justify-center">
   <div class="prs-skeleton" :style="{
-    '--skel-width': (width !== '0') ? width +'rem' : '100%',
-    '--skel-height': (height !== '0') ? height +'rem' : '1rem',
+    '--skel-width': (width === 0) ? '100%' : (width +'rem'),
+    '--skel-height': (height === 0) ? '1rem' : (height +'rem'),
     '--skel-radius': radius +'px',
-    '--skel-bg': background !== '' ? background : 'currentColor',
+    '--skel-bg': background.length ? background : 'currentColor',
     '--skel-fg': foreground,
   }"></div>
 </div>

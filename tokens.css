@@ -1,8 +1,77 @@
 /*
-  Prose UI - tokens
+  Prose UI v1.6 - tokens
 */
 
 :where(html) {
+
+  /* size - base */
+  --prs-size: .25rem; /* 4px */
+
+  /* size - scale */
+  --prs-size-0: 0px; /* 0px */
+  --prs-size-0-5: calc(var(--prs-size) * 0.5); /* 2px */
+  --prs-size-1: var(--prs-size); /* 4px */
+  --prs-size-1-5: calc(var(--prs-size) * 1.5); /* 6px */
+  --prs-size-2: calc(var(--prs-size) * 2); /* 8px */
+  --prs-size-2-5: calc(var(--prs-size) * 2.5); /* 10px */
+  --prs-size-3: calc(var(--prs-size) * 3); /* 12px */
+  --prs-size-3-5: calc(var(--prs-size) * 3.5); /* 14px */
+  --prs-size-4: calc(var(--prs-size) * 4); /* 16px */
+  --prs-size-5: calc(var(--prs-size) * 5); /* 20px */
+  --prs-size-6: calc(var(--prs-size) * 6); /* 24px */
+  --prs-size-7: calc(var(--prs-size) * 7); /* 28px */
+  --prs-size-8: calc(var(--prs-size) * 8); /* 32px */
+  --prs-size-9: calc(var(--prs-size) * 9); /* 36px */
+  --prs-size-10: calc(var(--prs-size) * 10); /* 40px */
+  --prs-size-11: calc(var(--prs-size) * 11); /* 44px */
+  --prs-size-12: calc(var(--prs-size) * 12); /* 48px */
+  --prs-size-14: calc(var(--prs-size) * 14); /* 56px */
+  --prs-size-15: calc(var(--prs-size) * 15); /* 60px */
+  --prs-size-16: calc(var(--prs-size) * 16); /* 64px */
+  --prs-size-18: calc(var(--prs-size) * 18); /* 72px */
+  --prs-size-20: calc(var(--prs-size) * 20); /* 80px */
+  --prs-size-24: calc(var(--prs-size) * 24); /* 96px */
+  --prs-size-28: calc(var(--prs-size) * 28); /* 112px */
+  --prs-size-32: calc(var(--prs-size) * 32); /* 128px */
+  --prs-size-36: calc(var(--prs-size) * 36); /* 144px */
+  --prs-size-40: calc(var(--prs-size) * 40); /* 160px */
+  --prs-size-44: calc(var(--prs-size) * 44); /* 176px */
+  --prs-size-48: calc(var(--prs-size) * 48); /* 192px */
+  --prs-size-52: calc(var(--prs-size) * 52); /* 208px */
+  --prs-size-56: calc(var(--prs-size) * 56); /* 224px */
+  --prs-size-60: calc(var(--prs-size) * 60); /* 240px */
+  --prs-size-64: calc(var(--prs-size) * 64); /* 256px */
+  --prs-size-72: calc(var(--prs-size) * 72); /* 288px */
+  --prs-size-80: calc(var(--prs-size) * 80); /* 320px */
+  --prs-size-96: calc(var(--prs-size) * 96); /* 384px */
+
+  /* size - px */
+  --prs-size-px-1: 1px;
+  --prs-size-px-2: 2px;
+  --prs-size-px-3: 3px;
+  --prs-size-px-4: 4px;
+
+  /* size - fluid */
+  --prs-size-fluid-1: clamp(calc(var(--prs-size) * 2), 1vw, calc(var(--prs-size) * 4)); /* ~8px to 16px */
+  --prs-size-fluid-2: clamp(calc(var(--prs-size) * 4), 2vw, calc(var(--prs-size) * 6)); /* ~16px to 24px */
+  --prs-size-fluid-3: clamp(calc(var(--prs-size) * 6), 3vw, calc(var(--prs-size) * 8)); /* ~24px to 32px */
+  --prs-size-fluid-4: clamp(calc(var(--prs-size) * 8), 4vw, calc(var(--prs-size) * 12)); /* ~32px to 48px */
+  --prs-size-fluid-5: clamp(calc(var(--prs-size) * 16), 5vw, calc(var(--prs-size) * 20)); /* ~64px to 80px */
+  --prs-size-fluid-6: clamp(calc(var(--prs-size) * 20), 7vw, calc(var(--prs-size) * 30)); /* ~80px to 120px */
+  --prs-size-fluid-7: clamp(calc(var(--prs-size) * 30), 10vw, calc(var(--prs-size) * 40)); /* ~120px to 160px */
+  --prs-size-fluid-8: clamp(calc(var(--prs-size) * 40), 20vw, calc(var(--prs-size) * 60)); /* ~160px to 240px */
+  --prs-size-fluid-9: clamp(calc(var(--prs-size) * 60), 30vw, calc(var(--prs-size) * 80)); /* ~240px to 320px */
+  --prs-size-fluid-10: clamp(calc(var(--prs-size) * 80), 40vw, calc(var(--prs-size) * 120)); /* ~320px to 480px */
+
+  /* size - container */
+  --prs-size-xxs: 240px;
+  --prs-size-xs: 360px;
+  --prs-size-sm: 480px;
+  --prs-size-md: 768px;
+  --prs-size-lg: 1024px;
+  --prs-size-xl: 1440px;
+  --prs-size-xxl: 1920px;
+
   /* black */
   --prs-c-black: #000000;
 
@@ -221,7 +290,7 @@
   --prs-shadow-2xl: 0 25px 50px -12px rgba(0, 0, 0, 0.25), 0 15px 20px -5px rgba(0, 0, 0, 0.1);
 
   /* transition */
-  --prs-transition-property: color, background-color, border-color, text-decoration-color, fill, stroke, opacity, outline-color, box-shadow, transform, filter, backdrop-filter;
+  --prs-transition-property: backdrop-filter, background-color, border-color, box-shadow, color, content-visibility, display, fill, filter, opacity, outline-color, overlay, pointer-events, rotate, scale, stroke, text-decoration-color, transform, translate, -webkit-backdrop-filter;
   --prs-transition-timing: cubic-bezier(0.4, 0, 0.2, 1);
   --prs-transition-duration: 150ms;
 }
