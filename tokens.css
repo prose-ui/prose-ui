@@ -26,7 +26,6 @@
   --prs-size-11: calc(var(--prs-size) * 11); /* 44px */
   --prs-size-12: calc(var(--prs-size) * 12); /* 48px */
   --prs-size-14: calc(var(--prs-size) * 14); /* 56px */
-  --prs-size-15: calc(var(--prs-size) * 15); /* 60px */
   --prs-size-16: calc(var(--prs-size) * 16); /* 64px */
   --prs-size-18: calc(var(--prs-size) * 18); /* 72px */
   --prs-size-20: calc(var(--prs-size) * 20); /* 80px */
