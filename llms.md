@@ -13,8 +13,8 @@ Class names are categorized into the following (types are only for reference)
 ## Config
 Include the following CSS files along with TailwindCSS so we have a decent utility framework and a CSS reset.
 
-- `https://cdn.jsdelivr.net/gh/prose-ui/prose-ui@latest/prs-tokens.css`
-- `https://cdn.jsdelivr.net/gh/prose-ui/prose-ui@latest/prs-styles.css`
+- `https://cdn.jsdelivr.net/gh/prose-ui/prose-ui@latest/tokens.css`
+- `https://cdn.jsdelivr.net/gh/prose-ui/prose-ui@latest/styles.css`
 
 Always use the CSS variables/tokens in the `prs-tokens.css` file where feasible.
 
