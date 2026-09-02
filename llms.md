@@ -203,12 +203,16 @@ Small count or label that appears on another element, often used to display noti
 - `.prs-badge-current` - modifier: Border and text color is inherited
 - `.prs-badge-pill` - modifier: Full radius
 - `.prs-badge-sharp` - modifier: No radius
+- `.prs-badge-flag` - modifier: With tails
 
 **Example:**  
 ```html
 <span
   class="prs-badge max-w-80"
   :class="{
+    'prs-badge-primary': variant === 'primary',
+    'prs-badge-secondary': variant === 'secondary',
+    'prs-badge-accent': variant === 'accent',
     'prs-badge-info': variant === 'info',
     'prs-badge-success': variant === 'success',
     'prs-badge-warning': variant === 'warning',
@@ -216,6 +220,7 @@ Small count or label that appears on another element, often used to display noti
     'prs-badge-current': variant === 'current',
     'prs-badge-pill': shape === 'pill',
     'prs-badge-sharp': shape === 'sharp',
+    'prs-badge-flag': shape === 'flag',
   }"
 >
   <span x-text="text ? text : 'Badge'" class="line-clamp-1 pointer-events-none"></span>
@@ -303,18 +308,24 @@ Flexible and extensible content container with multiple variants and options.
 
 **Classes:**  
 - `.prs-card` - component: Container
+- `.prs-card-advanced` - modifier: A more modern card
 - `.prs-card-bordered` - modifier: Adds a border
-- `.prs-card-action` - modifier: Add some dividers
-- `.prs-card-collapse` - modifier: Collapsible
-- `.prs-card-indent` - modifier: Collapsible indent
-- `.prs-card-header` - part: Container for header
-- `.prs-card-title` - part: Container for title
-- `.prs-card-body` - part: Container for body (only for -collapse)
-- `.prs-card-content` - part: Container for content
+- `.prs-card-sm` - modifier: Smaller content (advanced only)
+- `.prs-card-lg` - modifier: Larger content (advanced only)
+- `.prs-card-chips` - modifier: Chip row (advanced only)
+- `.prs-card-icon` - modifier: Icon row (advanced only)
+- `.prs-card-cite` - modifier: Citation row (advanced only)
+- `.prs-card-action` - modifier: Action slot(s)
+- `.prs-card-collapse` - modifier: Collapsible (legacy only)
+- `.prs-card-indent` - modifier: Collapsible indent (legacy only)
+- `.prs-card-header` - part: Container for header (legacy only)
+- `.prs-card-title` - part: Container for title (legacy only)
+- `.prs-card-body` - part: Container for body (only for -advanced or -collapse)
+- `.prs-card-content` - part: Container for content (legacy only)
 
 **Example:**  
 ```html
-<div x-data="{ expanded: true }" class="prs-card w-screen max-w-lg" :class="{
+<div x-show="!advanced" x-data="{ expanded: true }" class="prs-card w-screen max-w-lg" :class="{
   'prs-card-bordered': bordered,
   'prs-card-action': action,
   'prs-card-collapse': collapse,
@@ -322,10 +333,10 @@ Flexible and extensible content container with multiple variants and options.
 }">
   <a x-show="collapse" @click.prevent="expanded = !expanded" :aria-expanded="expanded" href="#" class="prs-card-header">
     <div class="icon" aria-hidden="true"><iconify-icon icon="mdi:chevron-right" width="100%" height="100%" class="iconify" noobserver></iconify-icon></div>
-    <div class="prs-card-title" x-text="title ? title : 'Card header'"></div>
+    <div class="prs-card-title" x-text="title ? title : 'Card title'"></div>
   </a>
   <div x-show="!collapse" class="prs-card-header">
-    <div class="prs-card-title" x-text="title ? title : 'Card header'"></div>
+    <div class="prs-card-title" x-text="title ? title : 'Card title'"></div>
     <button x-show="action" class="prs-btn prs-btn-tertiary">Action</button>
   </div>
   <div x-show="collapse">
@@ -343,6 +354,37 @@ Flexible and extensible content container with multiple variants and options.
     <button class="prs-btn prs-btn-primary">Action</button>
   </div>
 </div>
+
+<article x-show="advanced" class="prs-card prs-card-advanced w-screen max-w-md" :class="{
+  'prs-card-bordered': bordered,
+  'prs-card-sm': size === 'sm',
+  'prs-card-lg': size === 'lg',
+}">
+  <figure x-show="image"><img src="https://placehold.net/4.png" /></figure>
+  <header>
+    <p x-show="chips" class="prs-card-chips">
+      <span class="prs-chip prs-chip-soft prs-chip-success">For Instructors</span>
+      <span class="prs-chip prs-chip-soft prs-chip-accent">For Administrations</span>
+      <span class="prs-chip prs-chip-soft prs-chip-primary">For Students</span>
+    </p>
+    <p x-show="icon" class="prs-card-icon"><iconify-icon icon="mdi:link-variant" class="icon" noobserver></iconify-icon></p>
+    <hgroup>
+      <p x-show="badge"><span class="prs-badge prs-badge-accent prs-badge-flag">NEW!</span></p>
+      <h2 x-text="title ? title : 'Card title'"></h2>
+    </hgroup>
+  </header>
+  <div class="prs-card-body">
+    <p x-text="body ? body : 'Lorem ipsum'"></p>
+    <div x-show="cite" class="prs-card-cite">
+      <div class="prs-avatar"><iconify-icon icon="mdi:account" width="100%" height="100%" noobserver></iconify-icon></div>
+      <cite>Smitty Werbenyagermanjensen</cite>
+    </div>
+  </div>
+  <footer x-show="action">
+    <button class="prs-btn prs-btn-primary">This Action</button>
+    <button class="prs-btn prs-btn-tertiary"><span>And/Or This Action</span> <iconify-icon icon="mdi:arrow-right" class="icon" noobserver></iconify-icon></button>
+  </footer>
+</article>
 ```
 
 ***
@@ -445,6 +487,14 @@ Small, interactive element that represents an input, attribute, or action.
 
 **Classes:**  
 - `.prs-chip` - component: Container
+- `.prs-chip-soft` - modifier: Soft-style variant
+- `.prs-chip-primary` - modifier: Primary color (soft only)
+- `.prs-chip-secondary` - modifier: Secondary color (soft only)
+- `.prs-chip-accent` - modifier: Accent color (soft only)
+- `.prs-chip-info` - modifier: Info color (soft only)
+- `.prs-chip-success` - modifier: Success color (soft only)
+- `.prs-chip-warning` - modifier: Warning color (soft only)
+- `.prs-chip-danger` - modifier: Danger color (soft only)
 - `.prs-chip-label` - part: Container
 - `.prs-chip_active` - state: Active/Selected
 - `.prs-chip_hover` - state: Manually apply visual hover
@@ -456,7 +506,15 @@ Small, interactive element that represents an input, attribute, or action.
 <button
   class="prs-chip"
   :class="{
+    'prs-chip-soft': variant === 'soft',
     'prs-chip_active': variant === 'active',
+    'prs-chip-primary': color === 'primary',
+    'prs-chip-secondary': color === 'secondary',
+    'prs-chip-accent': color === 'accent',
+    'prs-chip-info': color === 'info',
+    'prs-chip-success': color === 'success',
+    'prs-chip-warning': color === 'warning',
+    'prs-chip-danger': color === 'danger',
     'prs-chip_hover': state === 'hover',
     'prs-chip_focus': state === 'focus',
   }"
@@ -486,7 +544,12 @@ Form element that allows users to select a date from a calendar interface.
 - `.prs-cal-week` - part: Weekday list
 - `.prs-cal-day` - part: For &lt;button&gt;
 - `.prs-cal-day_today` - state: Today
+- `.prs-cal-day_range` - state: Day within range
+- `.prs-cal-day_start` - state: Start of range
+- `.prs-cal-day_end` - state: End of range
 - `.prs-cal-day_selected` - state: Selected day
+- `.prs-cal-day_tease` - state: Future/past tease (same as disabled)
+- `.prs-cal-day_disabled` - state: Disabled (same as tease)
 
 **Example:**  
 ```html
@@ -511,22 +574,22 @@ Form element that allows users to select a date from a calendar interface.
         <span>Fri</span>
         <span>Sat</span>
       </div>
-      <button class="prs-cal-day prs-cal-day_disabled" aria-label="Mm DD, YYYY">26</button>
-      <button class="prs-cal-day prs-cal-day_disabled" aria-label="Mm DD, YYYY">27</button>
-      <button class="prs-cal-day prs-cal-day_disabled" aria-label="Mm DD, YYYY">28</button>
-      <button class="prs-cal-day prs-cal-day_disabled" aria-label="Mm DD, YYYY">29</button>
-      <button class="prs-cal-day prs-cal-day_disabled" aria-label="Mm DD, YYYY">30</button>
-      <button class="prs-cal-day prs-cal-day_disabled" aria-label="Mm DD, YYYY">31</button>
+      <button disabled class="prs-cal-day" aria-label="Mm DD, YYYY">26</button>
+      <button class="prs-cal-day prs-cal-day_tease" aria-label="Mm DD, YYYY">27</button>
+      <button class="prs-cal-day prs-cal-day_tease" aria-label="Mm DD, YYYY">28</button>
+      <button class="prs-cal-day prs-cal-day_tease" aria-label="Mm DD, YYYY">29</button>
+      <button class="prs-cal-day prs-cal-day_tease" aria-label="Mm DD, YYYY">30</button>
+      <button class="prs-cal-day prs-cal-day_tease" aria-label="Mm DD, YYYY">31</button>
       <button class="prs-cal-day" aria-label="Mm DD, YYYY">1</button>
       <button class="prs-cal-day" aria-label="Mm DD, YYYY">2</button>
       <button class="prs-cal-day" aria-label="Mm DD, YYYY">3</button>
       <button class="prs-cal-day" aria-label="Mm DD, YYYY">4</button>
-      <button class="prs-cal-day prs-cal-day_selected" aria-label="Mm DD, YYYY selected">5</button>
-      <button class="prs-cal-day" aria-label="Mm DD, YYYY">6</button>
-      <button class="prs-cal-day" aria-label="Mm DD, YYYY">7</button>
-      <button class="prs-cal-day" aria-label="Mm DD, YYYY">8</button>
-      <button class="prs-cal-day" aria-label="Mm DD, YYYY">9</button>
-      <button class="prs-cal-day" aria-label="Mm DD, YYYY">10</button>
+      <button class="prs-cal-day" :class="{ 'prs-cal-day_selected': selected, 'prs-cal-day_today': today, 'prs-cal-day_selected prs-cal-day_start': range }" aria-label="Mm DD, YYYY selected">5</button>
+      <button class="prs-cal-day" :class="range && 'prs-cal-day_range'" aria-label="Mm DD, YYYY">6</button>
+      <button class="prs-cal-day" :class="range && 'prs-cal-day_range'" aria-label="Mm DD, YYYY">7</button>
+      <button class="prs-cal-day" :class="range && 'prs-cal-day_range'" aria-label="Mm DD, YYYY">8</button>
+      <button class="prs-cal-day" :class="range && 'prs-cal-day_range'" aria-label="Mm DD, YYYY">9</button>
+      <button class="prs-cal-day" :class="range && 'prs-cal-day_end prs-cal-day_selected'" aria-label="Mm DD, YYYY selected">10</button>
       <button class="prs-cal-day" aria-label="Mm DD, YYYY">11</button>
       <button class="prs-cal-day" aria-label="Mm DD, YYYY">12</button>
       <button class="prs-cal-day" aria-label="Mm DD, YYYY">13</button>
@@ -534,7 +597,7 @@ Form element that allows users to select a date from a calendar interface.
       <button class="prs-cal-day" aria-label="Mm DD, YYYY">15</button>
       <button class="prs-cal-day" aria-label="Mm DD, YYYY">16</button>
       <button class="prs-cal-day" aria-label="Mm DD, YYYY">17</button>
-      <button class="prs-cal-day prs-cal-day_today" aria-current="date" aria-label="Mm DD, YYYY">18</button>
+      <button class="prs-cal-day" aria-current="date" aria-label="Mm DD, YYYY">18</button>
       <button class="prs-cal-day" aria-label="Mm DD, YYYY">19</button>
       <button class="prs-cal-day" aria-label="Mm DD, YYYY">20</button>
       <button class="prs-cal-day" aria-label="Mm DD, YYYY">21</button>
@@ -548,11 +611,11 @@ Form element that allows users to select a date from a calendar interface.
       <button class="prs-cal-day" aria-label="Mm DD, YYYY">29</button>
       <button class="prs-cal-day" aria-label="Mm DD, YYYY">30</button>
       <button class="prs-cal-day" aria-label="Mm DD, YYYY">31</button>
-      <button class="prs-cal-day prs-cal-day_disabled" aria-label="Mm DD, YYYY">1</button>
-      <button class="prs-cal-day prs-cal-day_disabled" aria-label="Mm DD, YYYY">2</button>
-      <button class="prs-cal-day prs-cal-day_disabled" aria-label="Mm DD, YYYY">3</button>
-      <button class="prs-cal-day prs-cal-day_disabled" aria-label="Mm DD, YYYY">4</button>
-      <button class="prs-cal-day prs-cal-day_disabled" aria-label="Mm DD, YYYY">5</button>
+      <button class="prs-cal-day prs-cal-day_tease" aria-label="Mm DD, YYYY">1</button>
+      <button class="prs-cal-day prs-cal-day_tease" aria-label="Mm DD, YYYY">2</button>
+      <button class="prs-cal-day prs-cal-day_tease" aria-label="Mm DD, YYYY">3</button>
+      <button class="prs-cal-day prs-cal-day_tease" aria-label="Mm DD, YYYY">4</button>
+      <button class="prs-cal-day prs-cal-day_tease" aria-label="Mm DD, YYYY">5</button>
     </div>
   </div>
 </div>
@@ -631,7 +694,14 @@ Use this with the [button](../button/) and [menu](../menu/) components. It&#39;s
 <div class="prs-dropdown">
   <button
     :class="{
-      'prs-btn-ghost': ghost,
+      'prs-btn-primary': variant === 'primary',
+      'prs-btn-secondary': variant === 'secondary',
+      'prs-btn-tertiary': variant === 'tertiary',
+      'prs-btn-accent': color === 'accent',
+      'prs-btn-info': color === 'info',
+      'prs-btn-success': color === 'success',
+      'prs-btn-warning': color === 'warning',
+      'prs-btn-danger': color === 'danger',
       'prs-btn-sm': size === 'sm',
       'prs-btn-lg': size === 'lg',
       'prs-btn_hover': state === 'hover',
@@ -753,6 +823,45 @@ Make sure your **label** uses a **for** attribute that ties to your input **id**
     </div>
   </div>
 </div>
+```
+
+***
+
+### Icon
+
+**Description**  
+Symbols that can be used to represent various options or actions
+
+**Classes:**  
+- `.prs-icon` - component: Container
+- `.prs-icon-xs` - modifier: Extra small variant
+- `.prs-icon-sm` - modifier: small variant
+- `.prs-icon-lg` - modifier: Large variant
+- `.prs-icon-xl` - modifier: Extra large variant
+
+**Example:**  
+```html
+<i
+  class="prs-icon"
+  :class="{
+    'prs-icon-xs': size === 'xs',
+    'prs-icon-sm': size === 'sm',
+    'prs-icon-lg': size === 'lg',
+    'prs-icon-xl': size === 'xl',
+    'prs-animation-spin': animate === 'spin',
+    'prs-animation-ping': animate === 'ping',
+    'prs-animation-blink': animate === 'blink',
+    'prs-animation-float': animate === 'float',
+    'prs-animation-bounce': animate === 'bounce',
+    'prs-animation-pulse': animate === 'pulse',
+    'prs-duration-sneeze': duration === 'sneeze',
+    'prs-duration-breath': duration === 'breath',
+    'prs-duration-linger': duration === 'linger',
+    'prs-duration-rest': duration === 'rest',
+  }"
+>
+  <iconify-icon :icon="icon ? 'mdi:'+ icon : 'mdi:check'" :rotate="rotate !== 'default' ? rotate : null" noobserver></iconify-icon>
+</i>
 ```
 
 ***
@@ -932,7 +1041,7 @@ If the user has reduce motion settings applied in their browser or OS the spin a
 
 **Example:**  
 ```html
-<div class="absolute inset-0 flex items-center justify-center rounded-box transition" :class="reverse && 'bg-black/60'">
+<div class="flex items-center justify-center rounded-box transition" :class="reverse && 'bg-black/60'">
   <span
     class="prs-loading"
     :class="{
@@ -1860,7 +1969,7 @@ This is a pure CSS alternative to something like [Tippy.js](https://atomiks.gith
   :data-tip="text ? text : 'Tooltip'"
 >
   <div x-show="embed" class="prs-tooltip-content">
-    <div class="animate-bounce text-(--prs-c-warning) -rotate-6 text-base font-black">Fancy</div>
+    <div class="prs-animation-float prs-duration-breath text-(--prs-c-warning) -rotate-6 text-base font-black">Fancy</div>
   </div>
   <button class="prs-btn prs-btn-secondary" :disabled="open">
     <span x-text="position" class="capitalize"></span>
