@@ -15,8 +15,9 @@ Include the following CSS files along with TailwindCSS so we have a decent utili
 
 - `https://cdn.jsdelivr.net/gh/prose-ui/prose-ui@latest/tokens.css`
 - `https://cdn.jsdelivr.net/gh/prose-ui/prose-ui@latest/styles.css`
+- `https://cdn.jsdelivr.net/gh/prose-ui/prose-ui@latest/typography.css`
 
-Always use the CSS variables/tokens in the `prs-tokens.css` file where feasible.
+Always use the CSS variables/tokens in the tokens css file where feasible.
 
 ***
 
