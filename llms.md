@@ -38,6 +38,8 @@ Please use **details** and **summary** tags. Our CSS takes care of motion-safe s
 
 **Classes:**  
 - `.prs-accordion` - component: Container
+- `.prs-accordion-separated` - modifier: Inner separator lines
+- `.prs-accordion-bordered` - modifier: Outer border
 - `.prs-accordion-content` - part: For content container
 
 **Example:**  
@@ -45,7 +47,8 @@ Please use **details** and **summary** tags. Our CSS takes care of motion-safe s
 <div class="w-screen max-w-lg">
   <div class="prs-accordion" :class="{
     'prs-accordion-plus': symbol === 'plus',
-    'prs-accordion-ghost': ghost,
+    'prs-accordion-separated': separated,
+    'prs-accordion-bordered': bordered,
   }">
     <details :name="exclusive && 'group-name'" :open="open ? open : false">
       <summary>Summary</summary>
@@ -262,9 +265,11 @@ Interactive element that users can click to perform an action or navigate to ano
 
 **Classes:**  
 - `.prs-btn` - component: For &lt;button&gt; or &lt;a&gt;
+- `.prs-btn-reverse` - modifier: For &quot;on dark&quot; scenarios
 - `.prs-btn-primary` - modifier: Contained variant
 - `.prs-btn-secondary` - modifier: Outlined variant
 - `.prs-btn-tertiary` - modifier: Ghost-like variant
+- `.prs-btn-link` - modifier: Ghost-like variant but with underline and no padding
 - `.prs-btn-success` - modifier: Green variant
 - `.prs-btn-danger` - modifier: Red variant
 - `.prs-btn-sm` - modifier: Small variant
@@ -277,27 +282,31 @@ Interactive element that users can click to perform an action or navigate to ano
 
 **Example:**  
 ```html
-<button
-  class="prs-btn"
-  :class="{
-    'prs-btn-primary': variant === 'primary',
-    'prs-btn-secondary': variant === 'secondary',
-    'prs-btn-tertiary': variant === 'tertiary',
-    'prs-btn-success': color === 'success',
-    'prs-btn-danger': color === 'danger',
-    'prs-btn-sm': size === 'sm',
-    'prs-btn-lg': size === 'lg',
-    'prs-btn-square': shape === 'square',
-    'prs-btn-circle': shape === 'circle',
-    'prs-btn_hover': state === 'hover',
-    'prs-btn_focus': state === 'focus',
-  }"
-  :disabled="state === 'disabled'"
->
-  <iconify-icon x-show="shape !== 'default' || (withIcon === 'leading')" icon="mdi:close" class="icon pointer-events-none" noobserver></iconify-icon>
-  <span x-show="shape === 'default'" x-text="text ? text : 'Button'" class="line-clamp-1 pointer-events-none"></span>
-  <iconify-icon x-show="(withIcon === 'trailing' && shape === 'default')" icon="mdi:close" class="icon pointer-events-none" noobserver></iconify-icon>
-</button>
+<div class="p-6 w-full h-full flex items-center justify-center absolute inset-0 rounded-box transition" :class="reverse && 'bg-(--prs-c-primary-900)'">
+  <button
+    class="prs-btn"
+    :class="{
+      'prs-btn-reverse': reverse,
+      'prs-btn-primary': variant === 'primary',
+      'prs-btn-secondary': variant === 'secondary',
+      'prs-btn-tertiary': variant === 'tertiary',
+      'prs-btn-link': variant === 'link',
+      'prs-btn-success': color === 'success',
+      'prs-btn-danger': color === 'danger',
+      'prs-btn-sm': size === 'sm',
+      'prs-btn-lg': size === 'lg',
+      'prs-btn-square': shape === 'square',
+      'prs-btn-circle': shape === 'circle',
+      'prs-btn_hover': state === 'hover',
+      'prs-btn_focus': state === 'focus',
+    }"
+    :disabled="state === 'disabled'"
+  >
+    <iconify-icon x-show="shape !== 'default' || (withIcon === 'leading')" icon="mdi:close" class="icon pointer-events-none" noobserver></iconify-icon>
+    <span x-show="shape === 'default'" x-text="text ? text : 'Button'" class="line-clamp-1 pointer-events-none"></span>
+    <iconify-icon x-show="(withIcon === 'trailing' && shape === 'default')" icon="mdi:close" class="icon pointer-events-none" noobserver></iconify-icon>
+  </button>
+</div>
 ```
 
 ***
@@ -855,10 +864,7 @@ Symbols that can be used to represent various options or actions
     'prs-animation-float': animate === 'float',
     'prs-animation-bounce': animate === 'bounce',
     'prs-animation-pulse': animate === 'pulse',
-    'prs-duration-sneeze': duration === 'sneeze',
-    'prs-duration-breath': duration === 'breath',
-    'prs-duration-linger': duration === 'linger',
-    'prs-duration-rest': duration === 'rest',
+    ['prs-duration-' + duration]: !!duration,
   }"
 >
   <iconify-icon :icon="icon ? 'mdi:'+ icon : 'mdi:check'" :rotate="rotate !== 'default' ? rotate : null" noobserver></iconify-icon>
@@ -1494,39 +1500,62 @@ Use **button** tag for tab. Also make sure to use **tabindex=&quot;-1&quot;** on
 
 **Classes:**  
 - `.prs-tabs` - component: Container
-- `.prs-tabs-center` - modifier: Justify center
+- `.prs-tabs-center` - modifier: Center horizontal tabs
+- `.prs-tabs-vertical` - modifier: Vertical flow
 - `.prs-tab` - part: For &lt;button&gt;
+- `.prs-tab-label` - part: For nested label (needed for proper focus)
+- `.prs-tab-icon` - part: For vertical active icon
 - `.prs-tab_active` - state: Currently active
 
 **Example:**  
 ```html
-<div class="border-b border-(--prs-c-gray-300) w-screen max-w-sm [&_button]:-mb-px">
-  <div
-    role="tablist"
-    class="prs-tabs"
-    :class="{
-      'prs-tabs-center': center
-    }"
-  >
-    <button
-      @mousedown.prevent
-      @click.prevent
-      id="tab-1"
-      :tabindex="active ? 0 : -1"
-      :aria-selected="active"
+<div x-data="{ active: 0, tabs: 6 }" x-id="['tab']" :class="vertical ? 'grid grid-cols-1 gap-4 md:grid-cols-2' : ''">
+  <div class="w-screen max-w-xs" :class="vertical ? '' : 'overflow-x-auto scrollbar-gutter-stable scrollbar-thin'">
+    <div
+      role="tablist"
+      class="prs-tabs"
       :class="{
-        'prs-tab_hover': state === 'hover',
-        'prs-tab_focus': state === 'focus',
-        'prs-tab_active': active, 
-      }
-      "
-      class="prs-tab"
-      role="tab"
-      :disabled="state === 'disabled' ? true : false"
+        'prs-tabs-center': center,
+        'prs-tabs-vertical': vertical,
+      }"
+      @keydown.right.prevent.stop="$focus.wrap().next()"
+      @keydown.home.prevent.stop="$focus.first()"
+      @keydown.page-up.prevent.stop="$focus.first()"
+      @keydown.left.prevent.stop="$focus.wrap().prev()"
+      @keydown.end.prevent.stop="$focus.last()"
+      @keydown.page-down.prevent.stop="$focus.last()"
     >
-      <span>Tab</span>
-      <span x-show="withBadge" class="prs-badge">5</span>
-    </button>
+      <template x-for="(i, index) in tabs" hidden>
+        <button
+          @mousedown.prevent
+          @click="active = index"
+          @focus="active = index"
+          :id="$id('tab', index)"
+          :tabindex="index === active ? 0 : -1"
+          :aria-selected="active === index"
+          :class="{
+            'prs-tab_hover': state === 'hover' && index < 2,
+            'prs-tab_focus': state === 'focus' && index === active,
+            'prs-tab_active': index === active,
+          }
+          "
+          class="prs-tab"
+          role="tab"
+          :disabled="(state === 'disabled' && index < 2) ? true : false"
+        >
+          <span class="prs-tab-label" x-text="vertical && index === 0 ? 'Tab With a Very Long Title Value to Test Truncation' : ('Tab '+ i)"></span>
+          <span class="prs-tab-icon" x-show="vertical && active === index">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" role="img"><use href="../../_assets/prs-icons.svg#chevron-right"></use></svg>
+          </span>
+          <span x-show="withBadge && !vertical && index === 0" class="prs-badge">5</span>
+        </button>
+      </template>
+    </div>
+  </div>
+  <div class="p-4 border border-(--prs-c-gray-300) bg-(--prs-c-white)" :class="vertical ? 'rounded-(--prs-radius-box)' : 'rounded-b-(--prs-radius-box)'">
+    <template x-for="(i, index) in tabs" hidden>
+      <div x-show="index === active" role="tabpanel" x-text="'Example Panel '+ i"></div>
+    </template>
   </div>
 </div>
 ```

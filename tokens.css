@@ -290,8 +290,8 @@
 
   /* transition */
   --prs-transition-property: backdrop-filter, background-color, border-color, box-shadow, color, content-visibility, display, fill, filter, opacity, outline-color, overlay, pointer-events, rotate, scale, stroke, text-decoration-color, transform, translate, -webkit-backdrop-filter;
-  --prs-transition-timing: var(--prs-ease-in-out-3);
-  --prs-transition-duration: var(--prs-duration-quick);
+  --prs-transition-timing: var(--prs-ease-in-out);
+  --prs-transition-duration: var(--prs-duration-180ms);
 
   /* animation */
   --prs-animation-fade-in: fade-in .5s var(--prs-ease-base);
@@ -310,11 +310,11 @@
   --prs-animation-slide-in-left: slide-in-left .5s var(--prs-ease-base);
   --prs-animation-shake-x: shake-x .75s var(--prs-ease-out);
   --prs-animation-shake-y: shake-y .75s var(--prs-ease-out);
-  --prs-animation-shake-z: shake-z 1s var(--prs-ease-in-out);
+  --prs-animation-shake-z: shake-z .75s var(--prs-ease-in-out);
   --prs-animation-spin: spin 2s linear infinite;
-  --prs-animation-ping: ping 5s var(--prs-ease-out) infinite;
-  --prs-animation-blink: blink 1s var(--prs-ease-out) infinite;
-  --prs-animation-float: float 3s var(--prs-ease-in-out) infinite;
+  --prs-animation-ping: ping 2s var(--prs-ease-out) infinite;
+  --prs-animation-blink: blink 2s var(--prs-ease-out) infinite;
+  --prs-animation-float: float 2s var(--prs-ease-in-out) infinite;
   --prs-animation-bounce: bounce 2s var(--prs-ease-elastic-in-out) infinite;
   --prs-animation-pulse: pulse 2s var(--prs-ease-out) infinite;
 
