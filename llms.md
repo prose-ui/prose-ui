@@ -1500,23 +1500,35 @@ Use **button** tag for tab. Also make sure to use **tabindex=&quot;-1&quot;** on
 
 **Classes:**  
 - `.prs-tabs` - component: Container
+- `.prs-tabs-scrollable` - modifier: Allow horizontal tabs to scroll on the x-axis
 - `.prs-tabs-center` - modifier: Center horizontal tabs
 - `.prs-tabs-vertical` - modifier: Vertical flow
 - `.prs-tab` - part: For &lt;button&gt;
 - `.prs-tab-label` - part: For nested label (needed for proper focus)
 - `.prs-tab-icon` - part: For vertical active icon
 - `.prs-tab_active` - state: Currently active
+- `--tabs-width` - token: fit-content
+- `--tab-color` - token: var(--prs-c-gray-600)
+- `--tab-hover-line` - token: var(--prs-c-secondary-300)
+- `--tab-hover-color` - token: var(--prs-c-gray-600)
+- `--tab-hover-bg` - token: transparent
+- `--tab-focus-color` - token: var(--prs-c-primary)
+- `--tab-active-line` - token: var(--prs-c-secondary)
+- `--tab-active-color` - token: var(--prs-c-gray-900)
+- `--tab-active-bg` - token: transparent
+- `--tab-active-hover-line` - token: var(--prs-c-secondary-700)
 
 **Example:**  
 ```html
-<div x-data="{ active: 0, tabs: 6 }" x-id="['tab']" :class="vertical ? 'grid grid-cols-1 gap-4 md:grid-cols-2' : ''">
-  <div class="w-screen max-w-xs" :class="vertical ? '' : 'overflow-x-auto scrollbar-gutter-stable scrollbar-thin'">
+<div x-data="{ active: 0, tabs: scrollable ? 6 : 4 }" x-id="['tab']" :class="vertical ? 'grid grid-cols-1 gap-4 md:grid-cols-2' : ''">
+  <div class="w-screen max-w-xs">
     <div
       role="tablist"
       class="prs-tabs"
       :class="{
         'prs-tabs-center': center,
         'prs-tabs-vertical': vertical,
+        'prs-tabs-scrollable': scrollable,
       }"
       @keydown.right.prevent.stop="$focus.wrap().next()"
       @keydown.home.prevent.stop="$focus.first()"
